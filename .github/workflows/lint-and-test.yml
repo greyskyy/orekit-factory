@@ -1,0 +1,35 @@
+name: Lint and test
+
+on: [push, pull_request]
+
+jobs:
+  flake8-lint:
+    runs-on: ubuntu-latest
+    name: Lint
+    steps:
+      - name: Check out source repository
+        uses: actions/checkout@v2
+      - name: Set up Python environment
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.10"
+      - name: flake8 Lint
+        uses: py-actions/flake8@v2
+  test:
+    runs-on: ubuntu-latest
+    name: Test
+    env:
+      AWS_DEFAULT_REGION: us-east-1
+    steps:
+      - name: Check out source repository
+        uses: actions/checkout@v2
+
+      - name: Install Conda environment with Micromamba
+        uses: mamba-org/provision-with-micromamba@main
+        with:
+          environment-file: environment.yaml
+          environment-name: orekit-factory
+      
+      - name: Execute tests
+        shell: bash -l {0}
+        run: pytest

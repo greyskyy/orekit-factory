@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "orekit-factory"
+description = "A collection of factory methods to bootstrap orekit python applications."
+authors = [
+    { name = "Joe Reed" }
+]
+requires-python = ">=3.9"
+dynamic = [
+    "version"
+]
+license = { text = "MIT" }
+readme = "README.md"
+classifiers = [
+    "Environment :: Console",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "License :: MIT",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Astrodynamics",
+    "Topic :: Utilities"
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]  # list of folders that contain the packages (["."] by default)
+include = ["orekitfactory*"]  # package names should match these glob patterns (["*"] by default)
+#exclude = ["**.tests*"]
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra --junitxml=.build/test_output.xml --cov=orekitfactory --cov-fail-under=80 --cov-report term --cov-report html:.build/test_cov_html --cov-report xml:.build/test-cov.xml"
+pythonpath = [
+  "src"
+]
+filterwarnings = [
+    "ignore::DeprecationWarning"
+]
+#testpaths = [
+#    "tests",
+#    "integration",
+#]
