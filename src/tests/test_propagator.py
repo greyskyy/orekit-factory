@@ -48,12 +48,6 @@ def test_numerical():
     from orekitfactory.propagator import to_propagator
     from orekitfactory.orbits import to_orbit
 
-    from org.orekit.attitudes import InertialProvider
-    from org.orekit.data import DataContext
-
-    context = DataContext.getDefault()
-    utc = context.getTimeScales().getUTC()
-
     orbit = to_orbit(
         a="7080 km",
         e=0.0008685,

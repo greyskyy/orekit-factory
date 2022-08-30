@@ -1,7 +1,5 @@
 """Unit tests for math.py."""
 
-import pytest
-
 
 def test_to_vector():
     from org.hipparchus.geometry.euclidean.threed import Vector3D

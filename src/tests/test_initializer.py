@@ -3,8 +3,6 @@ from unittest.mock import patch
 
 import orekitfactory.initializer
 
-import pytest
-
 
 @patch("orekitfactory.initializer.Dataloader.download")
 @patch("orekitfactory.initializer.orekit.pyhelpers.setup_orekit_curdir")

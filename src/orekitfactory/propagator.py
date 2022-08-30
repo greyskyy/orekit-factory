@@ -102,7 +102,8 @@ def to_sgp4_sdp4(
         tle (TLE): The two line element
         attitudeProvider (AttitudeProvider, optional): The attitude provider to use
         when propagating. Defaults to None.
-        mass (u.Quantity[u.kg]|float, optional): mass of the spacecraft in kg. Defaults to 100 kg.
+        mass (u.Quantity[u.kg]|float, optional): mass of the spacecraft in kg. Defaults
+        to 100 kg.
         context (DataContext, optional): Data context to use when building the
         propagator. If None, the default will be used. Defaults to None.
 

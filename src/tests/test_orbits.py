@@ -8,9 +8,6 @@ LINE_2 = "2 49260  98.2276 237.1831 0001142  78.2478 281.8849 14.57099002 38060"
 
 
 def test_check_tle():
-    from org.orekit.data import DataContext
-    from org.orekit.propagation.analytical.tle import TLE
-
     from orekitfactory.orbits import check_tle
 
     assert check_tle(LINE_1, LINE_2)

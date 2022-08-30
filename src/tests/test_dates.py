@@ -129,7 +129,7 @@ def test_interval():
     # verify comparisons
     assert not ivl1 < None
     assert ivl1 > None
-    assert not ivl1 == None
+    assert ivl1 is not None
     assert ivl1 < ivl2
     assert ivl2 > ivl1
     assert DateInterval(date1, date2) < ivl1
@@ -183,7 +183,7 @@ def test_interval_list():
     assert 2 == len(list4)
 
     assert (
-        "[[2022-08-28T13:15:00.000Z, 2022-08-28T13:17:00.000Z], [2022-08-28T13:18:00.000Z, 2022-08-28T13:19:00.000Z]]"
+        "[[2022-08-28T13:15:00.000Z, 2022-08-28T13:17:00.000Z], [2022-08-28T13:18:00.000Z, 2022-08-28T13:19:00.000Z]]"  # noqa: E501
         == str(list4)
     )
 
@@ -321,7 +321,6 @@ def test_list_builder():
     from orekitfactory.dates import (
         to_absolute_date,
         DateInterval,
-        DateIntervalList,
         DateIntervalListBuilder,
     )
 
@@ -329,7 +328,6 @@ def test_list_builder():
     date2 = to_absolute_date("2022-08-28T13:16:00Z")
     date3 = to_absolute_date("2022-08-28T13:17:00Z")
     date4 = to_absolute_date("2022-08-28T13:18:00Z")
-    date5 = to_absolute_date("2022-08-28T13:19:00Z")
     date6 = to_absolute_date("2022-08-28T13:20:00Z")
 
     # verify no bound, base case

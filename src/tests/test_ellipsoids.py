@@ -1,5 +1,4 @@
 """Unit tests for ellipsoids.py."""
-from multiprocessing.sharedctypes import Value
 import pytest
 
 

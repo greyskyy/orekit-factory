@@ -30,7 +30,7 @@ def get_reference_ellipsoid(
         frame = get_frame(frameName, **kwargs)
     elif isinstance(frame, str):
         frame = get_frame(frame, **kwargs)
-        
+
     lModel = model.lower()
     if lModel == "wgs84" or lModel == "wgs-84":
         return ReferenceEllipsoid.getWgs84(frame)
