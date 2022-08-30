@@ -2,7 +2,6 @@ name: orekit-factory
 channels:
   - conda-forge
 dependencies:
-  - isodate
   - orekit=11.2
   - pip
   - python=3.10.4
