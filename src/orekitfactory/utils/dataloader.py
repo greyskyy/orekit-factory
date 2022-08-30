@@ -56,7 +56,7 @@ class Dataloader:
         logging.getLogger(__name__).debug("HTTP GET response: %d", r.status_code)
 
         with open(dest, "wb") as fd:
-            shutil.copyfileobj(r, fd)
+            shutil.copyfileobj(r.content, fd)
 
         return dest
 

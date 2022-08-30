@@ -18,16 +18,17 @@ The utilities provided by the `orekitfactory` module can be broken out into the 
 
 The `orekitfactory.init_orekit()` method reduces the boilerplate for starting python-based orekit applications. It performs the following steps, then returns a handle to the orekit VM:
 
-1. Initialize the orekit vm by calling `orekit.initVM()`
-2. Downloads the default orekit data zip to a data directory. Note the option to re-download the file, if it exists, or simply use the cached version.
-3. Setup the data context using that default data zip.
+1. Downloads the default orekit data zip to a data directory. Note the option to re-download the file, if it exists, or simply use the cached version.
+2. Setup the data context using that default data zip.
 
 A basic example:
 
 ```python
+import orekit
 import orekitfactory
 
-vm = orekitfactory.init_orekit()
+vm = orekit.initVM()
+orekitfactory.init_orekit()
 ```
 
 ### Enumeration utilties
