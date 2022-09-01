@@ -10,7 +10,7 @@ import orekitfactory.initializer
 def test_initialize(mock_orekit, mock_pyhelpers, mock_dataloader):
     mock_dataloader.return_value = ["/path/to/orekit-data.zip"]
 
-    vm = orekitfactory.initializer.init_orekit()
+    orekitfactory.initializer.init_orekit()
 
     args, kwargs = mock_pyhelpers.call_args
 
