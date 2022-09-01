@@ -29,7 +29,31 @@ from .utils import validate_quantity
 
 
 @functools.singledispatch
-def to_propagator(orbit, **kwargs) -> Propagator:
+def to_propagator(
+    orbit: Orbit | TLE,
+    attitudeProvider: AttitudeProvider = None,
+    mass: units.Quantity[units.kg] | float = 100.0 * units.kg,
+    centralBody: ReferenceEllipsoid = None,
+    context: DataContext = None,
+    minStep: float = 0.001,
+    maxStep: float = 1000.0,
+    positionTolerance: units.Quantity[units.m] | float = 10.0 * units.m,
+    considerGravity: bool = True,
+    gravityFieldDegree: int = 2,
+    gravityFieldOrder: int = 2,
+    considerSolarPressure: bool = True,
+    sun: CelestialBody = None,
+    solarPressureCrossSection: units.Quantity[units.m**2]
+    | float = 1.0 * units.m**2,
+    solarCa: float = 0.2,
+    solarCs: float = 0.8,
+    considerAtmosphere: bool = True,
+    atmosphereCrossSection: units.Quantity[units.m**2] | float = 1.0 * units.m**2,
+    atmosphereDragCoeff: float = 2.2,
+    bodies: list = ["sun", "moon", "jupiter"],
+    orbitType: OrbitType = None,
+    **kwargs
+) -> Propagator:
     """Build a propagator instance for the provided orbit definition
 
     Args:
@@ -133,7 +157,7 @@ def to_numerical_propagator(
     context: DataContext = None,
     minStep: float = 0.001,
     maxStep: float = 1000.0,
-    positionTolerance: float = 10.0,
+    positionTolerance: units.Quantity[units.m] | float = 10.0 * units.m,
     considerGravity: bool = True,
     gravityFieldDegree: int = 2,
     gravityFieldOrder: int = 2,
@@ -216,6 +240,7 @@ def to_numerical_propagator(
     atmosphereCrossSection: units.Quantity = validate_quantity(
         atmosphereCrossSection, units.m**2
     )
+    positionTolerance = validate_quantity(positionTolerance, units.m)
 
     # load sun if needed
     if (considerSolarPressure or considerAtmosphere) and sun is None:
@@ -267,14 +292,17 @@ def to_numerical_propagator(
 
 
 def _build_propagator(
-    positionTolerance: float, orbit: Orbit, minStep: float, maxStep: float
+    positionTolerance: units.Quantity[units.m],
+    orbit: Orbit,
+    minStep: float,
+    maxStep: float,
 ) -> Propagator:
     tolerances = NumericalPropagator.tolerances(
-        positionTolerance, orbit, orbit.getType()
+        float(positionTolerance.to_value(units.m)), orbit, orbit.getType()
     )
     integrator = DormandPrince853Integrator(
-        minStep,
-        maxStep,
+        float(minStep),
+        float(maxStep),
         orekit.JArray("double").cast_(tolerances[0]),
         orekit.JArray("double").cast_(tolerances[1]),
     )
@@ -301,7 +329,9 @@ def _build_solar_pressure(
     centralBody: ReferenceEllipsoid,
 ) -> ForceModel:
     convention = IsotropicRadiationClassicalConvention(
-        float(solarPressureCrossSection.to_value(units.m**2)), solarCa, solarCs
+        float(solarPressureCrossSection.to_value(units.m**2)),
+        float(solarCa),
+        float(solarCs),
     )
     return SolarRadiationPressure(sun, centralBody.getEquatorialRadius(), convention)
 
@@ -314,7 +344,7 @@ def _build_drag_force(
 ) -> ForceModel:
     atmosphere = HarrisPriester(sun, centralBody)
     drag = IsotropicDrag(
-        float(atmosphereCrossSection.to_value(units.m**2)), atmosphereDragCoeff
+        float(atmosphereCrossSection.to_value(units.m**2)), float(atmosphereDragCoeff)
     )
     dragForce = DragForce(atmosphere, drag)
     return dragForce

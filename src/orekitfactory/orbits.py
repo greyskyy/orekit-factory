@@ -2,7 +2,7 @@ import astropy.units as units
 
 from org.orekit.data import DataContext
 from org.orekit.frames import Frame
-from org.orekit.orbits import KeplerianOrbit, Orbit, PositionAngle
+from org.orekit.orbits import KeplerianOrbit, Orbit, OrbitType, PositionAngle
 from org.orekit.propagation.analytical.tle import TLE
 from org.orekit.time import AbsoluteDate
 from org.orekit.utils import Constants
@@ -10,6 +10,29 @@ from org.orekit.utils import Constants
 from .dates import to_absolute_date
 from .utils import validate_quantity
 from .frames import get_frame
+
+
+def to_orbit_type(value: OrbitType | str) -> OrbitType:
+    """Convert a string to an orekit OrbitType.
+
+    This method is a no-op when an OrbitType is provided.
+
+    Args:
+        value (OrbitType | str): The input data to convert.
+
+    Returns:
+        OrbitType: The orbit type
+
+    Raises:
+        If `value` is not a str or OrbitType
+        If `value` is a string but cannot be converted.
+    """
+    if value is None:
+        return None
+    elif isinstance(value, OrbitType):
+        return value
+    else:
+        return OrbitType.valueOf(value.upper())
 
 
 def check_tle(line1: str, line2: str) -> bool:

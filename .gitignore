@@ -1,6 +1,7 @@
 .data
 .build
 dist/
+.coverage
 
 *.html
 
