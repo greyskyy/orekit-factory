@@ -29,10 +29,16 @@ dependencies = [
     "requests >= 2.28.1"
 ]
 
+[project.entry-points."pyrebar.preinit"]
+orekit = "orekitfactory.hooks:pre_init"
+
+[project.entry-points."pyrebar.postinit"]
+orekit = "orekitfactory.hooks:post_init"
+
 [tool.setuptools.packages.find]
 where = ["src"]  # list of folders that contain the packages (["."] by default)
 include = ["orekitfactory*"]  # package names should match these glob patterns (["*"] by default)
-#exclude = ["**.tests*"]
+exclude = ["**.tests*"]
 
 [tool.pytest.ini_options]
 minversion = "6.0"

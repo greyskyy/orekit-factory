@@ -1,0 +1,12 @@
+{
+    "python.testing.pytestArgs": [
+        "src",
+        "--no-cov"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "python.analysis.extraPaths": [
+        "${workspaceFolder}/src/",
+        "${workspaceFolder}/src/orekitfactory",
+    ]
+}
