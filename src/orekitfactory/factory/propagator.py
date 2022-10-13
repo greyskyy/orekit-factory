@@ -25,7 +25,7 @@ from org.orekit.propagation.analytical.tle import TLE, TLEPropagator
 from org.orekit.propagation.numerical import NumericalPropagator
 
 from .ellipsoids import get_reference_ellipsoid
-from .utils import validate_quantity
+from ..utils import validate_quantity
 
 
 @functools.singledispatch

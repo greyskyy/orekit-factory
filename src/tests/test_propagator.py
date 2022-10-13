@@ -9,7 +9,7 @@ LINE_2 = "2 49260  98.2276 237.1831 0001142  78.2478 281.8849 14.57099002 38060"
 
 def test_invalid():
     """Verify general input error cases."""
-    from orekitfactory.propagator import to_propagator
+    from orekitfactory.factory import to_propagator
 
     assert to_propagator(None) is None
 
@@ -20,7 +20,7 @@ def test_invalid():
 
 def test_tle():
     """Verify construction of an SGP4 propgagor instance."""
-    from orekitfactory.propagator import to_propagator
+    from orekitfactory.factory import to_propagator
 
     from org.orekit.attitudes import InertialProvider
     from org.orekit.data import DataContext
@@ -45,8 +45,8 @@ def test_tle():
 
 def test_numerical():
     """Verify construction of numerical propagators."""
-    from orekitfactory.propagator import to_propagator
-    from orekitfactory.orbits import to_orbit
+    from orekitfactory.factory import to_propagator
+    from orekitfactory.factory import to_orbit
 
     orbit = to_orbit(
         a="7080 km",

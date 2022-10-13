@@ -8,7 +8,7 @@ LINE_2 = "2 49260  98.2276 237.1831 0001142  78.2478 281.8849 14.57099002 38060"
 
 
 def test_check_tle():
-    from orekitfactory.orbits import check_tle
+    from orekitfactory.factory import check_tle
 
     assert check_tle(LINE_1, LINE_2)
     assert not check_tle("yellowbeard the pirate", "edith the pirate ship")
@@ -16,7 +16,7 @@ def test_check_tle():
 
 def test_to_tle():
     from org.orekit.data import DataContext
-    from orekitfactory.orbits import to_tle
+    from orekitfactory.factory import to_tle
 
     context = DataContext.getDefault()
     utc = context.getTimeScales().getUTC()
@@ -38,7 +38,7 @@ def test_to_orbit():
     from org.orekit.data import DataContext
     from org.orekit.utils import Constants
     from org.orekit.orbits import KeplerianOrbit
-    from orekitfactory.orbits import to_orbit
+    from orekitfactory.factory import to_orbit
 
     context = DataContext.getDefault()
 

@@ -3,7 +3,7 @@ import pytest
 
 
 def test_get_reference_ellipsoid():
-    from orekitfactory.ellipsoids import get_reference_ellipsoid
+    from orekitfactory.factory import get_reference_ellipsoid
     from org.orekit.models.earth import ReferenceEllipsoid
     from org.orekit.data import DataContext
     from org.orekit.utils import IERSConventions

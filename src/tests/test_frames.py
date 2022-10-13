@@ -5,7 +5,7 @@ import pytest
 
 def test_get_frame():
     """Verify retrieving the orekit frame based on string inputs."""
-    from orekitfactory import get_frame
+    from orekitfactory.factory import get_frame
 
     from org.orekit.data import DataContext
     from org.orekit.utils import IERSConventions
@@ -63,7 +63,7 @@ def test_get_frame():
 
 def test_get_predefined():
     """Verify aspects of get_predefined not otherwise covered."""
-    from orekitfactory.frames import get_predefined
+    from orekitfactory.factory.frames import get_predefined
 
     with pytest.raises(ValueError):
         get_predefined(None)

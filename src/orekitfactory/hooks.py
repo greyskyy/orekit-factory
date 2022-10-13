@@ -7,6 +7,7 @@ from .utils import ValidUrlOrFile
 
 ENABLED = bool(os.getenv("PYREBAR_HOOKS_ENABLED", "True"))
 
+
 def pre_init(parser: argparse.ArgumentParser):
     """py-rebar pre-init hook.
 
@@ -17,7 +18,7 @@ def pre_init(parser: argparse.ArgumentParser):
     global ENABLED
     if not ENABLED:
         return
-    
+
     if parser:
         parser.add_argument(
             "--orekit-data",
@@ -29,7 +30,7 @@ def pre_init(parser: argparse.ArgumentParser):
         )
 
 
-def post_init(args: argparse.Namespace):
+def post_init(args: argparse.Namespace = None):
     """pyrebar post-init hook.
 
     Args:
@@ -41,10 +42,10 @@ def post_init(args: argparse.Namespace):
     global ENABLED
     if not ENABLED:
         return
-    
+
     vm = get_orekit_vm()
     if not vm:
         raise RuntimeError("Failed to initialize the orekit vm.")
 
-    if "orekit_data" in args and args.orekit_data:
+    if args and "orekit_data" in args and args.orekit_data:
         init_orekit(source=args.orekit_data)

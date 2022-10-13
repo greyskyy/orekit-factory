@@ -4,10 +4,8 @@ A collection of utilities to bootstrap an orekit-based python application.
 
 ## Installation
 
-Currently, this can be installed using `pip` directly from this github repository.
-
 ```sh
-$ pip install git+https://github.com/greyskyy/orekit-factory.git@0.1.0
+$ pip install orekit-factory
 ```
 
 ## Usage

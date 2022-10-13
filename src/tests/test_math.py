@@ -4,7 +4,7 @@
 def test_to_vector():
     from org.hipparchus.geometry.euclidean.threed import Vector3D
 
-    from orekitfactory import to_vector
+    from orekitfactory.factory import to_vector
 
     # test none return zero-vector
     assert Vector3D.ZERO.equals(to_vector(None))
@@ -28,7 +28,7 @@ def test_to_vector():
 def test_to_rotation():
     from org.hipparchus.geometry.euclidean.threed import Rotation, Vector3D
 
-    from orekitfactory import to_rotation
+    from orekitfactory.factory import to_rotation
 
     # verify None and Zero result in identity rotation
     assert Rotation.IDENTITY.equals(to_rotation())

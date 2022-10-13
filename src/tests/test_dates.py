@@ -7,7 +7,7 @@ from datetime import datetime as dt, timedelta
 
 def test_str_to_absolutedate():
     """Verify creation of absolute dates."""
-    from orekitfactory.dates import to_absolute_date
+    from orekitfactory.factory import to_absolute_date
 
     from org.orekit.data import DataContext
 
@@ -38,7 +38,8 @@ def test_str_to_absolutedate():
 
 def test_interval():
     """Verify the DateInterval."""
-    from orekitfactory.dates import to_absolute_date, DateInterval
+    from orekitfactory.factory import to_absolute_date
+    from orekitfactory.time import DateInterval
 
     date1 = to_absolute_date("2022-08-28T13:15:00Z")
     date2 = to_absolute_date("2022-08-28T13:16:00Z")
@@ -141,7 +142,8 @@ def test_interval():
 
 def test_interval_list():
     """Tests verifying the DateIntervalList."""
-    from orekitfactory.dates import to_absolute_date, DateInterval, DateIntervalList
+    from orekitfactory.factory import to_absolute_date
+    from orekitfactory.time import DateInterval, DateIntervalList
 
     date1 = to_absolute_date("2022-08-28T13:15:00Z")
     date2 = to_absolute_date("2022-08-28T13:16:00Z")
@@ -190,11 +192,11 @@ def test_interval_list():
 
 def test_list_union():
     """Tests verifying the DateIntervalList union operation."""
-    from orekitfactory.dates import (
-        to_absolute_date,
+    from orekitfactory.factory import to_absolute_date
+    from orekitfactory.time import (
         DateInterval,
         DateIntervalList,
-        IntervalListOperations,
+        list_union,
     )
 
     date1 = to_absolute_date("2022-08-28T13:15:00Z")
@@ -212,9 +214,9 @@ def test_list_union():
     )
 
     with pytest.raises(ValueError):
-        IntervalListOperations.union(None, list1)
+        list_union("yellowbeard", list1)
 
-    union1 = IntervalListOperations.union(ivl1, list2)
+    union1 = list_union(ivl1, list2)
     assert DateInterval(date1, date6) == union1.span
     assert 2 == len(union1)
     assert DateInterval(date1, date4) == union1[0]
@@ -223,11 +225,11 @@ def test_list_union():
 
 def test_list_intersection():
     """Tests verifying DateIntervalList intersection operation."""
-    from orekitfactory.dates import (
-        to_absolute_date,
+    from orekitfactory.factory import to_absolute_date
+    from orekitfactory.time import (
         DateInterval,
         DateIntervalList,
-        IntervalListOperations,
+        list_intersection,
     )
 
     date1 = to_absolute_date("2022-08-28T13:15:00Z")
@@ -244,7 +246,7 @@ def test_list_intersection():
         intervals=(DateInterval(date3, date4), DateInterval(date5, date6))
     )
 
-    int1 = IntervalListOperations.intersection(
+    int1 = list_intersection(
         list1,
         (DateInterval(date3, date4), DateInterval(date5, date6)),
         allow_zero_length=True,
@@ -252,18 +254,14 @@ def test_list_intersection():
     assert 1 == len(int1)
     assert DateInterval(date3, date3) == int1[0]
 
-    int2 = IntervalListOperations.intersection(list2, list1, allow_zero_length=False)
+    int2 = list_intersection(list2, list1, allow_zero_length=False)
     assert 0 == len(int2)
 
 
 def test_list_compliment():
     """Tests verifying DateIntervalList list compliment."""
-    from orekitfactory.dates import (
-        to_absolute_date,
-        DateInterval,
-        DateIntervalList,
-        IntervalListOperations,
-    )
+    from orekitfactory.factory import to_absolute_date
+    from orekitfactory.time import DateInterval, DateIntervalList, list_compliment
 
     date1 = to_absolute_date("2022-08-28T13:15:00Z")
     date2 = to_absolute_date("2022-08-28T13:16:00Z")
@@ -276,11 +274,11 @@ def test_list_compliment():
         intervals=(DateInterval(date2, date3), DateInterval(date4, date5))
     )
 
-    comp1 = IntervalListOperations.compliment(list)
+    comp1 = list_compliment(list)
     assert 1 == len(comp1)
     assert DateInterval(date3, date4) == comp1[0]
 
-    comp2 = IntervalListOperations.compliment(list, span=DateInterval(date1, date6))
+    comp2 = list_compliment(list, span=DateInterval(date1, date6))
     assert 3 == len(comp2)
     assert DateInterval(date1, date2) == comp2[0]
     assert DateInterval(date3, date4) == comp2[1]
@@ -289,11 +287,11 @@ def test_list_compliment():
 
 def test_list_subtract():
     """Tests verifying DateIntervalList subtraction."""
-    from orekitfactory.dates import (
-        to_absolute_date,
+    from orekitfactory.factory import to_absolute_date
+    from orekitfactory.time import (
         DateInterval,
         DateIntervalList,
-        IntervalListOperations,
+        list_subtract,
     )
 
     date1 = to_absolute_date("2022-08-28T13:15:00Z")
@@ -306,9 +304,7 @@ def test_list_subtract():
     list = DateIntervalList(
         intervals=(DateInterval(date2, date3), DateInterval(date4, date5))
     )
-    result = IntervalListOperations.subtract(
-        DateIntervalList(interval=DateInterval(date1, date6)), list
-    )
+    result = list_subtract(DateIntervalList(interval=DateInterval(date1, date6)), list)
 
     assert 3 == len(result)
     assert DateInterval(date1, date2) == result[0]
@@ -318,8 +314,8 @@ def test_list_subtract():
 
 def test_list_builder():
     """Tests verifying the list builder."""
-    from orekitfactory.dates import (
-        to_absolute_date,
+    from orekitfactory.factory import to_absolute_date
+    from orekitfactory.time import (
         DateInterval,
         DateIntervalListBuilder,
     )

@@ -38,10 +38,10 @@ def test_pre_init_disabled():
 
         args = parser.parse_args([])
         assert "orekit_data" not in args
-        
+
     finally:
         orekitfactory.hooks.ENABLED = True
-    
+
 
 def test_pre_init_fileargs():
     """Unit test verifying argument parsing."""

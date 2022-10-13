@@ -5,7 +5,7 @@ import pytest
 
 def test_convention():
     """Verify successful loading of the various conventions."""
-    from orekitfactory.conventions import to_iers_conventions
+    from orekitfactory.factory import to_iers_conventions
     from org.orekit.utils import IERSConventions
 
     for year in ("2010", "2003", "1996"):
@@ -25,14 +25,14 @@ def test_convention():
 
 def test_none():
     """Verify None returns None."""
-    from orekitfactory.conventions import to_iers_conventions
+    from orekitfactory.factory import to_iers_conventions
 
     assert to_iers_conventions(None) is None
 
 
 def test_bad_value():
     """Verify the ValueError is raised."""
-    from orekitfactory.conventions import to_iers_conventions
+    from orekitfactory.factory import to_iers_conventions
 
     with pytest.raises(ValueError):
         to_iers_conventions("yellowbeard")

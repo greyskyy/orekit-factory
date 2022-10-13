@@ -8,7 +8,7 @@ from org.orekit.time import AbsoluteDate
 from org.orekit.utils import Constants
 
 from .dates import to_absolute_date
-from .utils import validate_quantity
+from ..utils import validate_quantity
 from .frames import get_frame
 
 
